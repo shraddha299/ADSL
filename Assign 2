@@ -1,0 +1,73 @@
+#include <iostream>
+using namespace std; 
+
+void merge(int a[], int low, int mid, int high)    // Merge function
+{
+    int temp[10];
+    int k = low;         
+    
+    for (int i = low; i <= mid; i++)          // Insert non-zero elements into temp array from left Subarray
+    {
+        if (a[i] != 0)
+        {
+            temp[k] = a[i];
+            k++;
+         }
+    }
+    
+    for (int i = mid + 1; i <= high; i++)       // Insert non-zero elements into temp array from right Subarray
+    {
+        if (a[i] != 0)
+         {
+            temp[k] = a[i];
+            k++;
+          }
+    }
+    
+   while (k <= high)                             // Assign zero to empty places of temp array
+    {
+        temp[k] = 0;
+        k++;
+    }
+    
+    for (int i = low; i <= high; i++)           // Copy temp array to original array
+    {
+        a[i] = temp[i];
+    }
+}
+
+
+void mergeSort(int a[], int low, int high)    // Merge Sort function 
+{
+    if (low < high)
+    {
+        int mid = (low + high) / 2;
+        mergeSort(a, low, mid);
+        mergeSort(a, mid + 1, high);
+        merge(a, low, mid, high);
+    }
+}
+
+
+int main()
+{
+    int n;
+    cout <<"Enter number of elements:";
+    cin >> n;
+    int a[10];
+    cout <<"Enter elements: ";
+    
+    for (int i = 0; i < n; i++)    // for loop to Accept Array elements
+    {
+        cin >> a[i];      
+    }
+    
+    mergeSort(a, 0, n - 1);
+    
+    cout <<"Array after moving zeroes:"; 
+    for (int i = 0; i < n; i++)          // for loop to display array elements
+    {
+        cout << a[i] << " ";
+    }
+    return 0;
+}
