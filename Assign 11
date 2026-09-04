@@ -1,0 +1,56 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+int main()
+{
+    string s1, s2;
+    cout<<"\nEnter Two Strings :";
+    cin >> s1 >> s2;
+
+    int n = s1.length();
+    int m = s2.length();
+
+    bool dp[10][10] = {false};
+
+    dp[0][0] = true;        //If both Strings are NULL then they Match
+
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j <= m; j++)
+        {
+            if(!dp[i][j])      // check if we can convert 2 Characters of s1 into s2 if false then go to next character i.e increment j 
+            {
+                continue;
+            }
+            
+            if (s1[i] >= 'a' && s1[i] <= 'z')     // Delete lowercase character
+            {
+                dp[i + 1][j] = true;
+            }
+            
+           
+            if (j < m)       // Match character with s2
+            {
+                char c = s1[i];
+
+                if (c >= 'a' && c <= 'z')
+                {
+                    c = c - 'a' + 'A';     //Convert Lowercase to Uppercase 
+                }
+                
+                if (c == s2[j])
+                {
+                    dp[i + 1][j + 1] = true;
+                }
+            }
+        }
+    }
+
+    if (dp[n][m])
+        cout << "YES, It is Possible to Convert String s1 to s2 ";
+    else
+        cout << "NO, It is not Possible to Convert String s1 to s2 ";
+
+    return 0;
+}
