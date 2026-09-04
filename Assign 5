@@ -1,0 +1,64 @@
+#include <iostream>
+using namespace std;
+
+int main()
+{
+    int n, k;
+
+    cout << "Enter number of shops: ";
+    cin >> n;
+
+    int start[10], end[10];
+
+    cout << "Enter start and end time:\n";
+    for (int i = 0; i < n; i++)
+    {
+        cin >> start[i] >> end[i];
+    }
+
+    cout << "Enter number of persons: ";
+    cin >> k;
+
+    // Bubble sort according to ending time
+    for (int i = 0; i < n - 1; i++)
+    {
+        for (int j = 0; j < n - i - 1; j++)
+        {
+            if (end[j] > end[j + 1])
+            {
+                int temp = end[j];
+                end[j] = end[j + 1];
+                end[j + 1] = temp;
+
+                temp = start[j];
+                start[j] = start[j + 1];
+                start[j + 1] = temp;
+            }
+        }
+    }
+
+    int lastEnd[10];
+    for (int i = 0; i < k; i++)
+    {
+        lastEnd[i] = -1;     //As no Shop is visited yet
+    }
+
+    int count = 0;
+
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < k; j++)
+        {
+            if (start[i] >= lastEnd[j])  // To check that last shop is completely visited and time is over
+            {
+                lastEnd[j] = end[i];
+                count++;
+                break;
+            }
+        }
+    }
+
+    cout << "Maximum shops visited = " << count;
+
+    return 0;
+}
