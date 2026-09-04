@@ -1,0 +1,59 @@
+#include <iostream>
+using namespace std;
+int main()
+{  
+    int n;
+    cout << "Enter number of items: ";
+    cin >> n;
+    int value[20], weight[20];
+    double ratio[20];
+    
+    for (int i = 0; i < n; i++)
+    {
+        cout << "Enter value and weight of item "<< i + 1 << ": ";
+        cin >> value[i] >> weight[i];
+        ratio[i] = (double)value[i] / weight[i];
+    }
+    
+    for (int i = 0; i < n - 1; i++)
+    {
+        for (int j = i + 1; j < n; j++)
+        {
+            if (ratio[i] < ratio[j])
+            {
+                double tempRatio = ratio[i];
+                ratio[i] = ratio[j];
+                ratio[j] = tempRatio;
+                
+                int temp = value[i];
+                value[i] = value[j];
+                value[j] = temp;
+                
+                temp = weight[i];
+                weight[i] = weight[j];
+                weight[j] = temp;
+            }
+        }
+    }
+    
+    int capacity;
+    cout << "Enter knapsack capacity: ";
+    cin >> capacity;
+    double maxValue = 0;
+ 
+    for (int i = 0; i < n; i++)
+    {
+        if (weight[i] <= capacity)
+        {
+            maxValue += value[i];
+            capacity -= weight[i];
+        }
+        else
+        {
+            maxValue += ratio[i] * capacity;
+            break;
+        }
+    }
+    cout << "Maximum value = " << maxValue;
+    return 0;
+}
