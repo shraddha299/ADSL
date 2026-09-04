@@ -1,0 +1,56 @@
+#include <iostream>
+using namespace std;
+
+// Function to count trailing zeroes
+int countZeroes(int num)
+{
+    int count = 0;
+
+    while (num > 0)
+    {
+        num = num / 5;
+        count = count + num;
+    }
+
+    return count;
+}
+
+int main()
+{
+    int n;
+    cout << "Enter the required number of trailing zeroes: ";
+    cin >> n;
+
+    int low = 0;
+    int high = n * 5;
+    int answer = -1;
+
+    while (low <= high)
+    {
+        int mid = (low + high) / 2;
+
+        if (countZeroes(mid) >= n)
+        {
+            answer = mid;
+            high = mid - 1;
+        }
+        else
+        {
+            low = mid + 1;
+        }
+    }
+
+    // Check answer has exactly n trailing zeroes
+    if (answer != -1 && countZeroes(answer) == n)
+    {
+        cout << "Smallest number whose factorial has "
+             << n << " trailing zeroes is: " << answer << endl;
+    }
+    else
+    {
+        cout << "There is No number whose factorial has exactly "
+             << n << " trailing zeroes." << endl;
+    }
+
+    return 0;
+}
